@@ -27,7 +27,8 @@
       tHead.appendChild( td )
     });
 
-    var albumsData = albumsModel.extractAlbumData( albums );
+    albumsModel.init( albums );
+    var albumsData = albumsModel.albums;
     tBody.innerHTML = "";
 
     albumsData.forEach( function( albumData ) {
@@ -55,7 +56,7 @@
   var handleImageClicked = function( ev ) {
     var row = ev.target.parentNode.parentNode;
     var albumId = row.firstChild.innerText;
-    console.log( "clicked album id:", albumId );
+    console.log( "album clicked:", albumId )
   };
 
   window.onload = app;

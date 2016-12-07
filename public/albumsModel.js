@@ -1,5 +1,5 @@
 var albumsModel = {
-  extractAlbumData: function( albums ) {
+  init: function( albums ) {
     var albumsData = [];
 
     albums.forEach( function( album ) {
@@ -23,6 +23,6 @@ var albumsModel = {
     });
 
     console.log( "album data:", albumsData[0] );
-    return albumsData;
+    this.albums = albumsData;
   }
 };
