@@ -11,6 +11,7 @@
   };
 
   var populateTable = function( albumsData ) {
+
     var table = document.querySelector( 'table' );
     var tHead = document.querySelector( 'thead' );
     var tBody = document.querySelector( 'tBody' );
@@ -32,6 +33,8 @@
 
     var imagesTd = htmlHelper.create( 'td', "Image" );
     tHead.appendChild( imagesTd );
+    var tracksTd = htmlHelper.create( 'td', "Tracks" );
+    tHead.appendChild( tracksTd );
 
     var albumsData = albumsModel.albums;
     tBody.innerHTML = "";
@@ -42,18 +45,34 @@
       idTd.style.display = "none";
       var nameTd = htmlHelper.create( 'td', albumData.name );
       var artistsTd = htmlHelper.create( 'td', albumData.artists );
+
       var imageTd = htmlHelper.create( 'td' );
       var image = htmlHelper.create( 'img' );
       image.src = albumData.imageUrls[0];
       image.classList.add( 'album-image' );
-      // image.onclick = handleImageClicked;
-
       imageTd.appendChild( image );
+
+      var tracksTd = htmlHelper.create( 'td' );
+
+      albumsModel.getTracksForAlbum( albumData, function( tracksObject ) {
+        console.log( "tracks for", albumData.id, " received:", tracksObject );
+        var trackNames = tracksObject.items.map( function( track ) {
+          return track.name;
+        });
+        var i = 1;
+        var trackNamesString = trackNames.reduce( function( resultString, trackName ) {
+          i++;
+          return resultString + "\n" + i.toString() + ". " + trackName;
+        });
+        trackNamesString = "1. " + trackNamesString;
+        tracksTd.innerText = trackNamesString;
+      });
 
       tr.appendChild( idTd );
       tr.appendChild( nameTd );
       tr.appendChild( artistsTd );
       tr.appendChild( imageTd );
+      tr.appendChild( tracksTd );
       tBody.appendChild( tr );
     });
   };
@@ -64,18 +83,6 @@
     albumsModel.sortAlbumsBy( columnName );
     populateTable( albumsModel.albums );
   }
-
-  // var handleImageClicked = function( ev ) {
-  //   var img = ev.target;
-  //   var row = img.parentNode.parentNode;
-  //   var albumId = row.firstChild.innerText;
-  //   console.log( "album clicked:", albumId )
-  //   var album = albumsModel.getAlbumWithId( albumId );
-  //   var firstImage = album.imageUrls.shift();
-  //   album.imageUrls.push( firstImage );
-  //   console.log(album.imageUrls[0]);
-  //   img.src = album.imageUrls[0];
-  // };
 
   window.onload = app;
 

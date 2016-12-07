@@ -25,15 +25,17 @@ var albumsModel = {
     console.log( "album data:", albumsData[0] );
     this.albums = albumsData;
   },
+
   getAlbumWithId( id ) {
     return this.albums.find( function( album ) {
       return album.id === id;
     });
   },
+
   sortAlbumsBy( columnName ) {
 
     var key = columnName.toLowerCase();
-    
+
     if ( this.lastSortColumn === key ) {
       reverse = -1;
       this.lastSortColumn = null;
@@ -51,6 +53,14 @@ var albumsModel = {
       if ( albumAVal < albumBVal ) return -1 * reverse;
       if ( albumAVal > albumBVal ) return 1 * reverse;
       return 0;
+    });
+  },
+
+  getTracksForAlbum( album, callback ) {
+    var url = "https://api.spotify.com/v1/albums/" + album.id.toString() + "/tracks";
+    var tracks = null;
+    ajaxHelper.makeGetRequest( url, function( response ) {
+      callback( response );
     });
   }
 };
