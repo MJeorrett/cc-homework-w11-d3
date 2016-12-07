@@ -32,6 +32,7 @@
       var imageTd = htmlHelper.create( 'td' );
       var image = htmlHelper.create( 'img' );
       image.src = albumData.imageUrls[0];
+      image.classList.add( 'album-image' );
       imageTd.appendChild( image );
 
       tr.appendChild( nameTd );

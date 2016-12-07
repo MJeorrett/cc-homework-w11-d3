@@ -26,3 +26,8 @@ td {
   border: 1px solid beige;
   padding: 5px;
 }
+
+.album-image {
+  width: 100px;
+  height: 100px;
+}
