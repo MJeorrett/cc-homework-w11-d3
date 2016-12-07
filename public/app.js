@@ -4,7 +4,7 @@
     var url = "https://api.spotify.com/v1/search?q=christmas&type=album";
     ajaxHelper.makeGetRequest( url, function( responseObject ) {
       var albums = responseObject.albums.items;
-      console.log(albums[0]);
+      console.log("raw album:", albums[0]);
       populateTable( albums );
     });
   };
@@ -16,7 +16,7 @@
 
     tHead.innerHTML = "";
 
-    var columnHeadings = [ "Name", "Artists" ];
+    var columnHeadings = [ "Name", "Artists", "Images" ];
     columnHeadings.forEach( function( columnHeading ) {
       var td = htmlHelper.create( 'td', columnHeading );
       tHead.appendChild( td )
@@ -29,8 +29,14 @@
       var tr = htmlHelper.create( 'tr' );
       var nameTd = htmlHelper.create( 'td', albumData.name );
       var artistsTd = htmlHelper.create( 'td', albumData.artists );
+      var imageTd = htmlHelper.create( 'td' );
+      var image = htmlHelper.create( 'img' );
+      image.src = albumData.imageUrls[0];
+      imageTd.appendChild( image );
+
       tr.appendChild( nameTd );
       tr.appendChild( artistsTd );
+      tr.appendChild( imageTd );
       tBody.appendChild( tr );
     });
   };
@@ -49,9 +55,15 @@
         return output + ", " + artistName;
       });
 
+      var imageUrls = album.images.map( function( image ) {
+        return image.url;
+      });
+      albumData.imageUrls = imageUrls;
+
       albumsData.push( albumData );
     });
 
+    console.log( "album data:", albumsData[0] );
     return albumsData;
   };
 
