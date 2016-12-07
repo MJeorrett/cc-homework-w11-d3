@@ -4,11 +4,9 @@ var ajaxHelper = {
     httpRequest.open( 'GET', url );
     httpRequest.onload = function() {
       if ( this.status == 200 ) {
-        console.log( this.status );
-        console.log( this.responseText );
-        callback();
+        callback( JSON.parse( this.responseText ) );
       } else {
-        console.log( this.status );
+        console.log( "Request failed with status ", this.status );
       }
     };
     httpRequest.send();
