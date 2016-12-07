@@ -41,7 +41,7 @@
       var image = htmlHelper.create( 'img' );
       image.src = albumData.imageUrls[0];
       image.classList.add( 'album-image' );
-      image.onclick = handleImageClicked;
+      // image.onclick = handleImageClicked;
 
       imageTd.appendChild( image );
 
@@ -53,11 +53,17 @@
     });
   };
 
-  var handleImageClicked = function( ev ) {
-    var row = ev.target.parentNode.parentNode;
-    var albumId = row.firstChild.innerText;
-    console.log( "album clicked:", albumId )
-  };
+  // var handleImageClicked = function( ev ) {
+  //   var img = ev.target;
+  //   var row = img.parentNode.parentNode;
+  //   var albumId = row.firstChild.innerText;
+  //   console.log( "album clicked:", albumId )
+  //   var album = albumsModel.getAlbumWithId( albumId );
+  //   var firstImage = album.imageUrls.shift();
+  //   album.imageUrls.push( firstImage );
+  //   console.log(album.imageUrls[0]);
+  //   img.src = album.imageUrls[0];
+  // };
 
   window.onload = app;
 

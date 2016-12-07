@@ -24,5 +24,10 @@ var albumsModel = {
 
     console.log( "album data:", albumsData[0] );
     this.albums = albumsData;
+  },
+  getAlbumWithId( id ) {
+    return this.albums.find( function( album ) {
+      return album.id === id;
+    });
   }
 };
