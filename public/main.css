@@ -32,9 +32,21 @@ td {
 .album-image {
   width: 200px;
   height: 200px;
-  /*cursor: pointer;*/
 }
 
 .clickable-column-header {
   cursor: pointer;
+}
+
+p {
+  margin: 5px;
+}
+
+p:hover {
+  cursor: pointer;
+  color: yellow;
+}
+
+p:hover::after {
+  content: " >> play!"
 }

@@ -1,5 +1,8 @@
 (function() {
 
+  var playingTrack = null;
+  var playingPreviewUrl = "";
+
   var app = function(){
     var url = "https://api.spotify.com/v1/search?q=christmas&type=album";
     ajaxHelper.makeGetRequest( url, function( responseObject ) {
@@ -55,17 +58,17 @@
       var tracksTd = htmlHelper.create( 'td' );
 
       albumsModel.getTracksForAlbum( albumData, function( tracksObject ) {
-        console.log( "tracks for", albumData.id, " received:", tracksObject );
-        var trackNames = tracksObject.items.map( function( track ) {
-          return track.name;
-        });
+        // console.log( "tracks for", albumData.id, " received:", tracksObject );
         var i = 1;
-        var trackNamesString = trackNames.reduce( function( resultString, trackName ) {
+        tracksObject.items.forEach( function( track ) {
+          var displayString = i.toString() + ". " + track.name;
+          var p = htmlHelper.create( 'p', displayString );
+          p.previewUrl = track.preview_url;
+          p.classList.add( "track-listing" );
+          p.onclick = handleTrackClicked;
+          tracksTd.appendChild( p );
           i++;
-          return resultString + "\n" + i.toString() + ". " + trackName;
         });
-        trackNamesString = "1. " + trackNamesString;
-        tracksTd.innerText = trackNamesString;
       });
 
       tr.appendChild( idTd );
@@ -76,6 +79,24 @@
       tBody.appendChild( tr );
     });
   };
+
+  var handleTrackClicked = function( ev ) {
+    var previewUrl = ev.target.previewUrl;
+    var trackName = ev.target.innerText;
+    console.log( "track clicked:", trackName, "(", previewUrl, ")" );
+    if ( previewUrl === playingPreviewUrl ) {
+      console.log( playingTrack );
+      playingTrack.stop();
+    }
+    else {
+      if ( playingTrack ) {
+        playingTrack.stop();
+      }
+      playingPreviewUrl = previewUrl;
+      playingTrack = new Audio( previewUrl );
+      playingTrack.play();
+    }
+  }
 
   var handleColumnHeaderClicked = function( ev ) {
     var columnName = ev.target.innerText;
