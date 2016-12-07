@@ -12,6 +12,7 @@ body {
 table {
   border-collapse: collapse;
   margin: 30px;
+  text-align: center;
 }
 
 table, thead {
@@ -20,6 +21,7 @@ table, thead {
 
 thead {
   font-weight: bold;
+  font-size: 1.5em;
 }
 
 td {
