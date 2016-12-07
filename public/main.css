@@ -34,3 +34,7 @@ td {
   height: 100px;
   /*cursor: pointer;*/
 }
+
+.clickable-column-header {
+  cursor: pointer;
+}

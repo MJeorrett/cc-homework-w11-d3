@@ -29,5 +29,28 @@ var albumsModel = {
     return this.albums.find( function( album ) {
       return album.id === id;
     });
+  },
+  sortAlbumsBy( columnName ) {
+
+    var key = columnName.toLowerCase();
+    
+    if ( this.lastSortColumn === key ) {
+      reverse = -1;
+      this.lastSortColumn = null;
+    }
+    else {
+      reverse = 1;
+      this.lastSortColumn = key;
+    }
+
+    this.albums.sort( function( albumA, albumB ) {
+      var albumAVal = albumA[key];
+      var albumBVal = albumB[key];
+      console.log(albumAVal, ", ", albumBVal );
+
+      if ( albumAVal < albumBVal ) return -1 * reverse;
+      if ( albumAVal > albumBVal ) return 1 * reverse;
+      return 0;
+    });
   }
 };

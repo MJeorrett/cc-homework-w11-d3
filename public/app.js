@@ -5,18 +5,19 @@
     ajaxHelper.makeGetRequest( url, function( responseObject ) {
       var albums = responseObject.albums.items;
       console.log("raw album:", albums[0]);
-      populateTable( albums );
+      albumsModel.init( albums );
+      populateTable( albumsModel.albums );
     });
   };
 
-  var populateTable = function( albums ) {
+  var populateTable = function( albumsData ) {
     var table = document.querySelector( 'table' );
     var tHead = document.querySelector( 'thead' );
     var tBody = document.querySelector( 'tBody' );
 
     tHead.innerHTML = "";
 
-    var columnHeadings = [ "Name", "Artists", "Images" ];
+    var columnHeadings = [ "Name", "Artists" ];
 
     var idTd = htmlHelper.create( 'td', "_id" );
     idTd.style.display = "none";
@@ -24,10 +25,14 @@
 
     columnHeadings.forEach( function( columnHeading ) {
       var td = htmlHelper.create( 'td', columnHeading );
+      td.onclick = handleColumnHeaderClicked;
+      td.classList.add( 'clickable-column-header' );
       tHead.appendChild( td )
     });
 
-    albumsModel.init( albums );
+    var imagesTd = htmlHelper.create( 'td', "Image" );
+    tHead.appendChild( imagesTd );
+
     var albumsData = albumsModel.albums;
     tBody.innerHTML = "";
 
@@ -52,6 +57,13 @@
       tBody.appendChild( tr );
     });
   };
+
+  var handleColumnHeaderClicked = function( ev ) {
+    var columnName = ev.target.innerText;
+    console.log( "coilumn heading clicked:", columnName );
+    albumsModel.sortAlbumsBy( columnName );
+    populateTable( albumsModel.albums );
+  }
 
   // var handleImageClicked = function( ev ) {
   //   var img = ev.target;
