@@ -27,7 +27,7 @@
       tHead.appendChild( td )
     });
 
-    var albumsData = extractAlbumData( albums );
+    var albumsData = albumsModel.extractAlbumData( albums );
     tBody.innerHTML = "";
 
     albumsData.forEach( function( albumData ) {
@@ -56,33 +56,6 @@
     var row = ev.target.parentNode.parentNode;
     var albumId = row.firstChild.innerText;
     console.log( "clicked album id:", albumId );
-  };
-
-  var extractAlbumData = function( albums ) {
-    var albumsData = [];
-
-    albums.forEach( function( album ) {
-      var albumData = {}
-      albumData.id = album.id;
-      albumData.name = album.name;
-
-      var artistNames = album.artists.map( function( artist ) {
-        return artist.name;
-      });
-      albumData.artists = artistNames.reduce( function( output, artistName ) {
-        return output + ", " + artistName;
-      });
-
-      var imageUrls = album.images.map( function( image ) {
-        return image.url;
-      });
-      albumData.imageUrls = imageUrls;
-
-      albumsData.push( albumData );
-    });
-
-    console.log( "album data:", albumsData[0] );
-    return albumsData;
   };
 
   window.onload = app;
