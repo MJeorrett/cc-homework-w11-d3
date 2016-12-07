@@ -15,10 +15,24 @@
     var tBody = document.querySelector( 'tBody' );
 
     tHead.innerHTML = "";
-    tBody.innerHTML = "";
+
+    var columnHeadings = [ "Name", "Artists" ];
+    columnHeadings.forEach( function( columnHeading ) {
+      var td = htmlHelper.create( 'td', columnHeading );
+      tHead.appendChild( td )
+    });
 
     var albumsData = extractAlbumData( albums );
-    console.log( albumsData );
+    tBody.innerHTML = "";
+
+    albumsData.forEach( function( albumData ) {
+      var tr = htmlHelper.create( 'tr' );
+      var nameTd = htmlHelper.create( 'td', albumData.name );
+      var artistsTd = htmlHelper.create( 'td', albumData.artists );
+      tr.appendChild( nameTd );
+      tr.appendChild( artistsTd );
+      tBody.appendChild( tr );
+    });
   };
 
   var extractAlbumData = function( albums ) {
