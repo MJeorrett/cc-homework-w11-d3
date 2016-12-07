@@ -1,4 +1,28 @@
-main{
-  width: 300px;
-  margin: 0 auto;
+body {
+  background-color: dodgerblue;
+  color: beige;
+  font-family: sans-serif;
+}
+
+#main-container {
+  display: flex;
+  justify-content: center;
+}
+
+table {
+  border-collapse: collapse;
+  margin: 30px;
+}
+
+table, thead {
+  border: 2px solid beige;
+}
+
+thead {
+  font-weight: bold;
+}
+
+td {
+  border: 1px solid beige;
+  padding: 5px;
 }
