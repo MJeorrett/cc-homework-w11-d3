@@ -1,7 +1,7 @@
 (function() {
 
   var playingTrack = null;
-  var playingPreviewUrl = "";
+  var playingTrackP = null;
 
   var app = function(){
     var url = "https://api.spotify.com/v1/search?q=christmas&type=album";
@@ -81,20 +81,21 @@
   };
 
   var handleTrackClicked = function( ev ) {
-    var previewUrl = ev.target.previewUrl;
-    var trackName = ev.target.innerText;
+    var trackP = ev.target;
+    var previewUrl = trackP.previewUrl;
+    var trackName = trackP.innerText;
     console.log( "track clicked:", trackName, "(", previewUrl, ")" );
 
-    if ( previewUrl === playingPreviewUrl && playingTrack ) {
-      console.log( playingTrack );
+    if ( trackP == playingTrackP && playingTrack ) {
+      console.log( "stopping track", trackName );
       playingTrack.src = "";
-      previewUrl = "";
+      playingTrackP = null;
     }
     else {
       if ( playingTrack ) {
         playingTrack.src = "";
       }
-      playingPreviewUrl = previewUrl;
+      playingTrackP = trackP;
       playingTrack = new Audio( previewUrl );
       playingTrack.play();
     }
