@@ -57,12 +57,15 @@ p:hover {
 
 p:hover::after {
   content: " play >>";
-  /*font-size: 1.3em;*/
   font-weight: bold;
+}
+
+#playing-track {
+  color: yellow;
 }
 
 #playing-track::after {
   content: " playing";
-  /*font-size: 1.3em;*/
   font-weight: bold;
+  color: yellow;
 }
