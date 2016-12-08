@@ -4,6 +4,14 @@ body {
   font-family: sans-serif;
 }
 
+h1 {
+  font-family: 'Mountains of Christmas', cursive;
+  text-align: center;
+  font-size: 50px;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+}
+
 #main-container {
   display: flex;
   justify-content: center;
