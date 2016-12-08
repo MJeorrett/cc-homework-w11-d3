@@ -84,13 +84,15 @@
     var previewUrl = ev.target.previewUrl;
     var trackName = ev.target.innerText;
     console.log( "track clicked:", trackName, "(", previewUrl, ")" );
-    if ( previewUrl === playingPreviewUrl ) {
+
+    if ( previewUrl === playingPreviewUrl && playingTrack ) {
       console.log( playingTrack );
-      playingTrack.stop();
+      playingTrack.src = "";
+      previewUrl = "";
     }
     else {
       if ( playingTrack ) {
-        playingTrack.stop();
+        playingTrack.src = "";
       }
       playingPreviewUrl = previewUrl;
       playingTrack = new Audio( previewUrl );
