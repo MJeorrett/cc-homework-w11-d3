@@ -1,6 +1,6 @@
 (function() {
 
-  var playingTrack = null;
+  var playingTrackAudio = null;
   var playingTrackP = null;
 
   var app = function(){
@@ -84,20 +84,23 @@
     var trackP = ev.target;
     var previewUrl = trackP.previewUrl;
     var trackName = trackP.innerText;
-    console.log( "track clicked:", trackName, "(", previewUrl, ")" );
+    console.log( "playing track", trackName );
 
-    if ( trackP == playingTrackP && playingTrack ) {
+    var stopTrackOnly = false;
+    if ( trackP === playingTrackP ) stopTrackOnly = true;
+
+    if ( playingTrackP ) {
       console.log( "stopping track", trackName );
-      playingTrack.src = "";
+      playingTrackAudio.src = "";
+      playingTrackAudio = null;
+      playingTrackP.id = "";
       playingTrackP = null;
     }
-    else {
-      if ( playingTrack ) {
-        playingTrack.src = "";
-      }
+    if ( !stopTrackOnly ) {
+      trackP.id = "playing-track";
+      playingTrackAudio = new Audio( previewUrl );
+      playingTrackAudio.play();
       playingTrackP = trackP;
-      playingTrack = new Audio( previewUrl );
-      playingTrack.play();
     }
   }
 
